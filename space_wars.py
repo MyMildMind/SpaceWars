@@ -702,6 +702,7 @@ while not quit_game:
 				'enemy_count':str(enemy_count),
 				'coin_count':str(coin_count),
 				'bullet_count':str(bullet_count),
+				'miss_bullet_count':str(bullet_count-enemy_count),
 				'timestamp':str(int(datetime.timestamp(now)))}
 				csv_ls.append(a)
 
@@ -721,11 +722,12 @@ while not quit_game:
 			# to freeze and show player explosion longer
 			time.sleep(1)
 	import csv
-	fieldnames =['player_x','player_y','enemy_count','coin_count','bullet_count','timestamp']
-	csv_ls = [dict(t) for t in {tuple(d.items()) for d in csv_ls}]
-	print(csv_ls)
+	fieldnames =['player_x','player_y','enemy_count','coin_count','bullet_count','miss_bullet_count','timestamp']
+	# csv_ls = [dict(t) for t in {tuple(d.items()) for d in csv_ls}]
+	# print(csv_ls)
 	with open('test.csv', 'w', encoding='UTF8', newline='') as f:
-		writer = csv.DictWriter(f,fieldnames=fieldnames)
+		writer = csv.DictWriter(f,fieldnames)
+		writer.writeheader()
 		writer.writerows(csv_ls)
 	# Update High Score database
 	if score > 0:
