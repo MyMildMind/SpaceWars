@@ -26,6 +26,7 @@ import time
 import sqlite3
 from datetime import datetime
 from high_scores import high_scores
+import csv
 #import space_wars_settings as sws
 
 # initialize pygame
@@ -551,10 +552,13 @@ while not quit_game:
 	# --------------------
 	# Main Game Play Loop
 	# --------------------
+
+	#initiate key focus metric
 	csv_ls=[]
 	bullet_count = 0
 	coin_count = 0
 	enemy_count = 0
+
 	while not go_to_menu and not quit_game:
 
 		# Fill screen and background image
@@ -697,6 +701,8 @@ while not quit_game:
 						score += coin[i].hit_points
 						coin_count += 1
 				now = datetime.now()
+
+				#create dict for store focus metric
 				a = {'player_x':str(player.posX),
 				'player_y':str(player.posY),
 				'enemy_count':str(enemy_count),
@@ -721,10 +727,8 @@ while not quit_game:
 		if player.explosion_counter > 0 :
 			# to freeze and show player explosion longer
 			time.sleep(1)
-	import csv
+	
 	fieldnames =['player_x','player_y','enemy_count','coin_count','bullet_count','miss_bullet_count','timestamp']
-	# csv_ls = [dict(t) for t in {tuple(d.items()) for d in csv_ls}]
-	# print(csv_ls)
 	with open('test.csv', 'w', encoding='UTF8', newline='') as f:
 		writer = csv.DictWriter(f,fieldnames)
 		writer.writeheader()
